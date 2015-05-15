@@ -1,0 +1,65 @@
+
+
+public class DrawPanel extends JPanel{	
+	private int[][] a;
+	private int n,m;
+	
+	public DrawPanel(int k[][],int n1,int m1){
+		a=k;
+		n=n1;
+		m=m1;
+	}
+	
+	public void paintComponent(Graphics g){
+		super.paintComponent(g);
+		Graphics2D g2=(Graphics2D)g;
+		Graphics2D g3=(Graphics2D)g;
+		
+		double X=20;
+		double Y=20;
+		double width=480;
+		double height=480;			
+		double jiange=30;
+		
+		
+		
+		// 画棋盘网格
+		for(int i=0;i<=width/jiange;i++){
+			g2.draw(new Line2D.Double(X+i*jiange,Y,X+i*jiange,height+Y));
+			g2.draw(new Line2D.Double(X,Y+i*jiange,width+X,Y+i*jiange));
+		}		
+		//画中间点的标记
+		g3.setPaint(Color.RED);
+		g3.draw(new Line2D.Double(254,245,254,254));
+		g3.draw(new Line2D.Double(245,254,254,254));
+		g3.draw(new Line2D.Double(267,245,267,254));
+		g3.draw(new Line2D.Double(267,254,275,254));
+		
+		g3.draw(new Line2D.Double(245,266,254,266));
+		g3.draw(new Line2D.Double(254,266,254,275));
+		g3.draw(new Line2D.Double(266,275,266,266));
+		g3.draw(new Line2D.Double(266,266,275,266));
+		
+		//画旗子
+		for(int i=1;i<a.length-1;i++){
+			for(int j=1;j<a[i].length-1;j++){
+				Ellipse2D circle=new Ellipse2D.Double();
+				circle.setFrame(j*30-25, i*30-25, 28, 28);
+				if(a[i][j]==1){
+					g2.setPaint(Color.BLACK);
+					g2.fill(circle);
+				}else if(a[i][j]==2){
+					g2.setPaint(Color.WHITE);
+					g2.fill(circle);
+				}				
+			}
+		}
+		//画旗子上的标记
+		if(n>0&&m>0){
+			g2.setPaint(Color.RED);
+			g2.setStroke(new BasicStroke(1.5f)); 
+			g2.draw(new Line2D.Double(30*m-16,30*n-16,30*m-4,30*n-4));
+			g2.draw(new Line2D.Double(30*m-16,30*n-4,30*m-4,30*n-16));
+		}
+	}	
+}
